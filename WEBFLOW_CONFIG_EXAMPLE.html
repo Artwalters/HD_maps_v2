@@ -2,6 +2,18 @@
   HEERLEN MAP - WEBFLOW CONFIGURATIE
   Plaats deze code in Webflow:
   Page Settings > Custom Code > Before </body> tag
+
+  📍 CONFIGUREERBARE LOCATIE INSTELLINGEN:
+  ========================================
+  ✅ startPosition.center      - Waar de kaart opent (centrum van de kaart)
+  ✅ boundary.center           - Centrum van de boundary (voor teleport)
+  ✅ boundary.radius           - Hoe groot de boundary is (in kilometers)
+  ✅ introAnimation.startCoords - Van waar de intro animatie begint
+  ✅ introAnimation.endCoords   - Naar waar de intro animatie vliegt
+  ✅ teleport.maxDistance      - Hoe ver je mag navigeren voor teleport terug
+  ✅ zoomLimits.min/max        - Hoe ver in/uit gebruikers kunnen zoomen
+
+  💡 TIP: Voor elke stad/locatie pas je deze coördinaten aan!
   ===================================== -->
 
 <!-- 1. Laad het main script vanaf GitHub CDN -->
@@ -229,6 +241,104 @@
     teleport: {
       enabled: true,
       maxDistance: 1
+    }
+  };
+</script>
+-->
+
+<!-- =====================================
+  VOORBEELD VOOR VERSCHILLENDE LOCATIES
+  Laat zien hoe je alles aanpast voor een andere stad/locatie
+  ===================================== -->
+
+<!-- VOORBEELD 8: Configuratie voor een andere stad (bijv. Amsterdam) -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    // ✅ CENTRUM VAN DE KAART - Waar de kaart opent
+    startPosition: {
+      center: [4.895168, 52.370216],  // 📍 Amsterdam centrum coördinaten
+      zoom: 14.5,
+      pitch: 50,
+      bearing: 0
+    },
+
+    // ✅ BOUNDARY - Waar gebruikers binnen moeten blijven (voor teleport)
+    boundary: {
+      center: [4.895168, 52.370216],  // 📍 Centrum van de boundary (bijv. Dam)
+      radius: 1.5  // 1.5 kilometer radius rond het centrum
+    },
+
+    // ✅ INTRO ANIMATIE - Van welke plek naar welke plek
+    introAnimation: {
+      enabled: true,
+      startCoords: [4.900123, 52.378754],  // 📍 Start: Centraal Station Amsterdam
+      endCoords: [4.895168, 52.370216],    // 📍 Eind: Dam Amsterdam
+      startZoom: 13,
+      startPitch: 0,
+      startBearing: 0,
+      endZoom: 16,
+      endPitch: 45,
+      endBearing: 90,  // 90 graden gedraaid (kijk naar het oosten)
+      duration: 5000,  // 5 seconden animatie
+      delay: 2000      // Start na 2 seconden
+    },
+
+    // ✅ TELEPORT - Gebruikers terugbrengen als ze te ver navigeren
+    teleport: {
+      enabled: true,
+      maxDistance: 1.2  // Als gebruiker meer dan 1.2km van boundary center is, terug
+    },
+
+    // ✅ ZOOM LIMIETEN - Voorkom dat gebruikers te ver in/uit zoomen
+    zoomLimits: {
+      min: 11,  // Niet verder uitzoomen dan level 11
+      max: 18   // Niet verder inzoomen dan level 18
+    },
+
+    // Animatie snelheid
+    animation: {
+      speed: 0.9,
+      duration: 2200
+    }
+  };
+</script>
+-->
+
+<!-- VOORBEELD 9: Configuratie voor Maastricht -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    startPosition: {
+      center: [5.688611, 50.851368],  // 📍 Maastricht centrum
+      zoom: 15,
+      pitch: 40,
+      bearing: -20
+    },
+    boundary: {
+      center: [5.688611, 50.851368],  // 📍 Maastricht centrum als boundary
+      radius: 0.8  // 800 meter radius
+    },
+    introAnimation: {
+      enabled: true,
+      startCoords: [5.705556, 50.848889],  // 📍 Start: Maastricht Station
+      endCoords: [5.688611, 50.851368],    // 📍 Eind: Vrijthof Maastricht
+      startZoom: 14,
+      startPitch: 10,
+      startBearing: 0,
+      endZoom: 17,
+      endPitch: 45,
+      endBearing: 180,
+      duration: 7000,
+      delay: 3500
+    },
+    teleport: {
+      enabled: true,
+      maxDistance: 1.0
+    },
+    zoomLimits: {
+      min: 12,
+      max: 19
     }
   };
 </script>
