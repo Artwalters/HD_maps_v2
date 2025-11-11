@@ -21,6 +21,12 @@ const popupTranslations = {
     },
     aria: {
       closePopup: 'Sluit popup'
+    },
+    navigation: {
+      confirmTitle: 'Navigeer met Google Maps',
+      confirmMessage: 'Je wordt doorgestuurd naar Google Maps. Wil je doorgaan?',
+      confirmYes: 'Ja, navigeer',
+      confirmNo: 'Blijf hier',
     }
   },
   en: {
@@ -29,6 +35,12 @@ const popupTranslations = {
     },
     aria: {
       closePopup: 'Close popup'
+    },
+    navigation: {
+      confirmTitle: 'Navigate with Google Maps',
+      confirmMessage: 'You will be redirected to Google Maps. Do you want to continue?',
+      confirmYes: 'Yes, navigate',
+      confirmNo: 'Stay here',
     }
   },
   de: {
@@ -37,6 +49,12 @@ const popupTranslations = {
     },
     aria: {
       closePopup: 'Popup schließen'
+    },
+    navigation: {
+      confirmTitle: 'Mit Google Maps navigieren',
+      confirmMessage: 'Sie werden zu Google Maps weitergeleitet. Möchten Sie fortfahren?',
+      confirmYes: 'Ja, navigieren',
+      confirmNo: 'Hier bleiben',
     }
   }
 };
@@ -112,6 +130,61 @@ function manageDoubleFadeGradient(
     description.removeEventListener('scroll', updateFades);
     window.removeEventListener('resize', updateFades);
   };
+}
+
+/**
+ * Show navigation confirmation dialog
+ */
+function showNavigationConfirm(lat: string, lng: string, color: string): void {
+  const lang = detectLanguage();
+  const t = popupTranslations[lang];
+
+  // Create modal overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'navigation-confirm-overlay';
+
+  // Create modal
+  const modal = document.createElement('div');
+  modal.className = 'navigation-confirm-modal';
+  modal.innerHTML = `
+    <h3 class="navigation-confirm-title">${t.navigation.confirmTitle}</h3>
+    <p class="navigation-confirm-message">${t.navigation.confirmMessage}</p>
+    <div class="navigation-confirm-buttons">
+      <button class="navigation-confirm-no button-base" style="background-color: ${color}; border-color: ${color}; color: white;">${t.navigation.confirmNo}</button>
+      <button class="navigation-confirm-yes button-base">${t.navigation.confirmYes}</button>
+    </div>
+  `;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    modal.style.transform = 'scale(1)';
+  });
+
+  // Handle button clicks
+  const yesButton = modal.querySelector('.navigation-confirm-yes') as HTMLElement;
+  const noButton = modal.querySelector('.navigation-confirm-no') as HTMLElement;
+
+  const closeModal = () => {
+    overlay.style.opacity = '0';
+    modal.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      document.body.removeChild(overlay);
+    }, 300);
+  };
+
+  yesButton.addEventListener('click', () => {
+    window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank');
+    closeModal();
+  });
+
+  noButton.addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
 }
 
 export function setupPopupInteractions(popup: Popup, properties: any, coordinates: any): void {
@@ -360,22 +433,36 @@ export function setupPopupInteractions(popup: Popup, properties: any, coordinate
     );
   }
 
-  // Handle impressie button click
-  if (properties.image && popupElement.querySelector('.impressie-button')) {
-    const impressieButton = popupElement.querySelector('.impressie-button') as HTMLElement;
-    impressieButton.addEventListener('click', () => {
-      // Image popup should only be shown from the main popup, not from AR popups
-      if (!properties.link_ar) {
-        popupContent.style.transition = 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
-        popupContent.style.transform = 'rotate(-5deg) translateY(2.5rem) /* was 40px */ scale(0.6)';
-        popupContent.style.opacity = '0';
+  // Handle impressie button click (for all impressie buttons)
+  if (properties.image) {
+    popupElement.querySelectorAll('.impressie-button').forEach((button) => {
+      button.addEventListener('click', () => {
+        // Image popup should only be shown from the main popup, not from AR popups
+        if (!properties.link_ar) {
+          popupContent.style.transition = 'all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+          popupContent.style.transform = 'rotate(-5deg) translateY(2.5rem) /* was 40px */ scale(0.6)';
+          popupContent.style.opacity = '0';
 
-        setTimeout(() => {
-          const contentHeight = Math.max(frontContent.offsetHeight, backContent.offsetHeight);
-          popup.remove();
-          setActivePopup(null);
-          showImagePopup(properties, coordinates, contentHeight);
-        }, 400);
+          setTimeout(() => {
+            const contentHeight = Math.max(frontContent.offsetHeight, backContent.offsetHeight);
+            popup.remove();
+            setActivePopup(null);
+            showImagePopup(properties, coordinates, contentHeight);
+          }, 400);
+        }
+      });
+    });
+  }
+
+  // Handle navigate button click (show confirmation)
+  const navigateButton = popupElement.querySelector('.navigate-button') as HTMLElement;
+  if (navigateButton) {
+    navigateButton.addEventListener('click', () => {
+      const lat = navigateButton.getAttribute('data-lat');
+      const lng = navigateButton.getAttribute('data-lng');
+      const color = navigateButton.getAttribute('data-color') || '#6B46C1';
+      if (lat && lng) {
+        showNavigationConfirm(lat, lng, color);
       }
     });
   }

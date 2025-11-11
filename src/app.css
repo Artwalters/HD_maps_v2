@@ -408,7 +408,7 @@ h3 {
   padding: 0 !important;
   border-radius: 1.25rem !important; /* was 20px */
   overflow: visible !important;
-  width: clamp(16.25rem, 20vw + 10rem, 25rem) !important; /* ~260px → ~400px fluid */
+  width: clamp(14rem, 16vw + 7rem, 19rem) !important; /* ~224px → ~304px - nog compacter */
   background: transparent !important;
   box-shadow: none !important;
   transform-style: preserve-3d !important;
@@ -447,7 +447,7 @@ h3 {
 }
 
 .content-wrapper {
-  padding: 2.5rem 1.875rem 1.875rem 1.875rem; /* top increased */
+  padding: 1.75rem 1.25rem 1.25rem 1.25rem; /* Nog compacter */
   position: relative;
   display: flex;
   flex-direction: column;
@@ -507,7 +507,7 @@ h3 {
   margin-bottom: 3.5em;
   margin-top: 0.5em;
   flex-grow: 1;
-  max-height: 12em;
+  max-height: 10em;
 }
 
 /* Popup description */
@@ -609,13 +609,17 @@ p {
   border: 1px solid rgba(255,255,255,0.4);
   backdrop-filter: blur(5px);
   color: rgb(255, 255, 255);
-  padding: 0.4375rem 1.25rem; /* was 7px 20px */
-  border-radius: 0.5rem; /* was 0.75rem - now 8px for sleeker look */
+  padding: 0.3rem 0.9rem; /* Nog kleiner */
+  border-radius: 1.25rem; /* Ronde buttons - 20px */
   cursor: pointer;
-  font-size: 0.875rem; /* was 14px */
+  font-size: 0.75rem; /* Kleiner */
   text-transform: uppercase;
   transition: all 0.3s ease;
   z-index: 10;
+  text-decoration: none; /* Remove underline for links */
+  display: inline-flex; /* Better alignment for links */
+  align-items: center;
+  justify-content: center;
 }
 
 .button-base:hover {
@@ -623,15 +627,16 @@ p {
   transform: scale(1.01);
 }
 
-.impressie-button {
-  bottom: 1.875rem; /* was 30px */
-  right: 1.875rem; /* was 30px */
+.impressie-button,
+.navigate-button {
+  bottom: 1.5rem; /* Compacter */
+  right: 1.5rem;
 }
 
 .more-info-button,
 .terug-button {
-  bottom: 1.875rem; /* was 30px */
-  left: 1.875rem; /* was 30px */
+  bottom: 1.5rem; /* Compacter */
+  left: 1.5rem;
 }
 
 .close-button {
@@ -693,37 +698,36 @@ margin-top: 1rem;
 /* Small laptop screens - slightly bigger than mobile */
 @media screen and (min-width: 768px) and (max-width: 1200px) {
   .mapboxgl-popup-content {
-    width: clamp(16rem, 30vw, 19rem) !important; /* ~256px → ~304px */
+    width: clamp(17rem, 23vw, 19.8rem) !important; /* ~272px → ~317px */
   }
 
   .popup-title {
-    font-size: 3.2em !important;
+    font-size: 2.8em !important;
   }
 
   .popup-title.details {
-    font-size: 1.1rem !important;
+    font-size: 1rem !important;
   }
 }
 
 /* Large laptops (MacBook 16" etc.) - keep popup compact */
 @media screen and (min-width: 1201px) and (max-width: 1600px) {
   .mapboxgl-popup-content {
-    width: clamp(17rem, 25vw, 20rem) !important; /* ~272px → ~320px */
+    width: clamp(16.5rem, 20vw, 18.7rem) !important; /* ~264px → ~299px */
   }
 
   .popup-title {
-    font-size: 3.5em !important;
+    font-size: 3.1em !important;
   }
 
   .popup-title.details {
-    font-size: 1.15rem !important;
+    font-size: 1.05rem !important;
   }
 }
 
 @media screen and (max-width: 767px) {
   .mapboxgl-popup-content {
-    /* Smaller, more compact popup for mobile - closer to original styling */
-    width: clamp(15rem, 85vw, 18rem) !important; /* ~240px → ~288px */
+    width: clamp(13rem, 82vw, 15.5rem) !important; /* ~208px → ~248px - compacter op mobile */
   }
 
   .popup-title {
@@ -732,22 +736,23 @@ margin-top: 1rem;
   }
 
   .popup-title.details {
-    font-size: 1.2rem !important;
+    font-size: 1.1rem !important; /* Iets kleiner */
   }
 
   p {
-    font-size: 0.875rem; /* was 12px - now same rem, scales with root */
-    line-height: 1.5;
+    font-size: 0.75rem; /* Kleinere tekst op mobile */
+    line-height: 1.4;
   }
 
   .content-wrapper {
-    padding: 1.875rem; /* was 25px - now same rem value, scales via root font-size */
+    padding: 1.5rem; /* Compacter op mobile */
   }
 
   .popup-description {
     max-height: 9em;
     margin-top: .5em;
     margin-bottom: 0.3em;
+    font-size: 0.75rem; /* Kleinere beschrijvingstekst */
   }
 
   .popup-description-wrapper {
@@ -755,11 +760,22 @@ margin-top: 1rem;
     margin-bottom: 2.5em;
   }
 
+  .popup-descriptionv2 {
+    font-size: 0.75rem; /* Kleinere tekst voor details pagina */
+  }
+
+  .opening-hours-title {
+    font-size: 0.8em; /* Kleinere opening hours titel */
+  }
+
+  .opening-hours-row {
+    font-size: 0.75em; /* Kleinere opening hours tekst */
+  }
 
   .button-base {
-    border-radius: 0.5rem; /* was 0.75rem - now 8px for sleeker look */
-    padding: 0.25rem 0.875rem; /* Smaller on mobile */
-    font-size: 0.75rem; /* Smaller font on mobile */
+    border-radius: 1.25rem; /* Ronde buttons op mobile */
+    padding: 0.25rem 0.8rem; /* Kleiner */
+    font-size: 0.65rem; /* Nog kleinere button tekst */
   }
 }
 
@@ -768,7 +784,7 @@ margin-top: 1rem;
  * ============================== */
 
 .popup-back .content-wrapper {
-  padding: 1.875rem; /* was 30px */
+  padding: 1.5rem; /* Compacter */
   color: white;
   height: 100%;
   display: flex;
@@ -785,6 +801,37 @@ margin-top: 1rem;
   font-family: poppins, sans-serif;
   font-size: 0.875rem;
   line-height: 1.5;
+  max-height: 8em;
+  overflow-y: scroll;
+  padding-right: 0.9375rem;
+  margin-right: -0.9375rem;
+  -webkit-overflow-scrolling: touch;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+.popup-descriptionv2:active {
+  cursor: grabbing;
+}
+
+/* Scrollbar styling for descriptionv2 */
+.popup-descriptionv2::-webkit-scrollbar {
+  width: 0.3125rem;
+  background-color: transparent;
+}
+
+.popup-descriptionv2::-webkit-scrollbar-thumb {
+  border-radius: 0.625rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.popup-descriptionv2::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.4);
+  border-radius: 0.625rem;
+  background-color: transparent;
 }
 
 /* Opening hours styling */
@@ -845,7 +892,8 @@ margin-top: 1rem;
   flex: 1 1 auto;
   min-height: 0;
   overflow-y: auto;
-  padding-right: 0.625rem; /* was 10px */
+  padding-right: 0.9375rem; /* was 15px */
+  margin-right: -0.9375rem; /* was -15px */
   margin-bottom: 3em;
 }
 
@@ -952,13 +1000,13 @@ margin-top: 1rem;
   background: rgba(255,255,255,0.2);
   border: 1px solid rgba(255,255,255,0.4);
   color: white;
-  padding: 0.4375rem 1.25rem; /* was 7px 20px */
-  border-radius: 0.5rem; /* was 0.75rem - now 8px for sleeker look */
+  padding: 0.3rem 0.9rem; /* Match button-base */
+  border-radius: 1.25rem; /* Match button-base - 20px ronde buttons */
   cursor: pointer;
-  font-size: 0.875rem; /* was 14px */
+  font-size: 0.75rem; /* Match button-base */
   text-transform: uppercase;
   backdrop-filter: blur(5px);
-  transition: all 0.5s ease;
+  transition: all 0.3s ease; /* Match button-base */
   font-family: poppins, sans-serif;
 }
 
@@ -1744,4 +1792,74 @@ margin-top: 1rem;
   stroke-width: 2;    /* Lijn dikte (pas aan indien nodig, matcht origineel) */
   stroke-linecap: round; /* Afgeronde lijneinden */
   stroke-linejoin: round;/* Afgeronde lijnhoeken */
+}
+
+/* ==============================
+ * NAVIGATION CONFIRMATION MODAL
+ * ============================== */
+
+.navigation-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.navigation-confirm-modal {
+  background: white;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
+
+.navigation-confirm-title {
+  font-family: poppins, sans-serif !important;
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  line-height: normal !important;
+  text-transform: none !important;
+  margin: 0 0 1rem 0;
+  color: #333;
+  text-align: center;
+}
+
+.navigation-confirm-message {
+  font-family: poppins, sans-serif;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  text-align: center;
+}
+
+.navigation-confirm-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.navigation-confirm-buttons .button-base {
+  position: static;
+  flex: 1;
+  max-width: 150px;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(100,100,100,0.4);
+  color: #333;
+}
+
+.navigation-confirm-buttons .button-base:hover {
+  background: rgba(255,255,255,0.3);
 }

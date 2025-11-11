@@ -33,6 +33,7 @@ const popupTranslations = {
       back: 'Terug',
       impression: 'Impressie',
       moreInfo: 'Meer info',
+      navigate: 'Navigeer',
     },
     titles: {
       instruction: 'Instructie',
@@ -50,6 +51,12 @@ const popupTranslations = {
       facebook: 'Facebook',
       navigate: 'Navigeer naar locatie',
     },
+    navigation: {
+      confirmTitle: 'Navigeer met Google Maps',
+      confirmMessage: 'Je wordt doorgestuurd naar Google Maps. Wil je doorgaan?',
+      confirmYes: 'Ja, navigeer',
+      confirmNo: 'Blijf hier',
+    },
   },
   en: {
     buttons: {
@@ -58,6 +65,7 @@ const popupTranslations = {
       back: 'Back',
       impression: 'Impression',
       moreInfo: 'More info',
+      navigate: 'Navigate',
     },
     titles: {
       instruction: 'Instruction',
@@ -75,6 +83,12 @@ const popupTranslations = {
       facebook: 'Facebook',
       navigate: 'Navigate to location',
     },
+    navigation: {
+      confirmTitle: 'Navigate with Google Maps',
+      confirmMessage: 'You will be redirected to Google Maps. Do you want to continue?',
+      confirmYes: 'Yes, navigate',
+      confirmNo: 'Stay here',
+    },
   },
   de: {
     buttons: {
@@ -83,6 +97,7 @@ const popupTranslations = {
       back: 'Zurück',
       impression: 'Eindruck',
       moreInfo: 'Mehr Info',
+      navigate: 'Navigieren',
     },
     titles: {
       instruction: 'Anleitung',
@@ -99,6 +114,12 @@ const popupTranslations = {
       instagram: 'Instagram',
       facebook: 'Facebook',
       navigate: 'Zum Standort navigieren',
+    },
+    navigation: {
+      confirmTitle: 'Mit Google Maps navigieren',
+      confirmMessage: 'Sie werden zu Google Maps weitergeleitet. Möchten Sie fortfahren?',
+      confirmYes: 'Ja, navigieren',
+      confirmNo: 'Hier bleiben',
     },
   },
 };
@@ -574,7 +595,6 @@ ${properties.image ? createARButton(properties) : ''}
         
         <div class="popup-side ar popup-back">
           <div class="content-wrapper">
-            <div class="popup-title details">${t.titles.instruction}</div>
             <div class="popup-ar-instructie">${properties.instructie || t.messages.defaultARInstruction}</div>
             <button class="more-info-button button-base">${t.buttons.back}</button>
 ${createARButton(properties, 'impressie-button button-base')}
@@ -611,14 +631,17 @@ ${createARButton(properties, 'impressie-button button-base')}
                 <div class="fade-bottom"></div>
               </div>
 
-              ${properties.image ? `<button class="impressie-button button-base">${t.buttons.impression}</button>` : ''}
+              ${
+                coordinates
+                  ? `<button class="navigate-button button-base" data-lat="${coordinates[1]}" data-lng="${coordinates[0]}" data-color="${properties.color || '#6B46C1'}" aria-label="${t.aria.navigate}">${t.buttons.navigate}</button>`
+                  : ''
+              }
               <button class="more-info-button button-base">${t.buttons.moreInfo}</button>
             </div>
           </div>
 
           <div class="popup-side popup-back">
             <div class="content-wrapper">
-              <div class="popup-title details">${properties.name || 'Naam error'}</div>
 
                <!-- Add this new social-icons div -->
           <div class="social-icons">
@@ -669,6 +692,7 @@ ${createARButton(properties, 'impressie-button button-base')}
                 <div class="popup-descriptionv2">${properties.descriptionv2}</div>
               </div>
               ${generateOpeningHours(properties)}
+              ${properties.image ? `<button class="impressie-button button-base">${t.buttons.impression}</button>` : ''}
               <button class="more-info-button button-base">${t.buttons.back}</button>
             </div>
           </div>
