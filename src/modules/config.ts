@@ -20,6 +20,27 @@ declare global {
         speed?: number;
         duration?: number;
       };
+      introAnimation?: {
+        enabled?: boolean;
+        startCoords?: [number, number];
+        endCoords?: [number, number];
+        startZoom?: number;
+        startPitch?: number;
+        startBearing?: number;
+        endZoom?: number;
+        endPitch?: number;
+        endBearing?: number;
+        duration?: number;
+        delay?: number;
+      };
+      zoomLimits?: {
+        min?: number;
+        max?: number;
+      };
+      teleport?: {
+        enabled?: boolean;
+        maxDistance?: number;
+      };
     };
   }
 }
@@ -47,6 +68,30 @@ interface AnimationConfig {
   duration: number;
 }
 
+interface IntroAnimationConfig {
+  enabled: boolean;
+  startCoords: [number, number];
+  endCoords: [number, number];
+  startZoom: number;
+  startPitch: number;
+  startBearing: number;
+  endZoom: number;
+  endPitch: number;
+  endBearing: number;
+  duration: number;
+  delay: number;
+}
+
+interface ZoomLimitsConfig {
+  min: number;
+  max: number;
+}
+
+interface TeleportConfig {
+  enabled: boolean;
+  maxDistance: number;
+}
+
 // Default configuration
 const DEFAULT_CONFIG = {
   MAP: {
@@ -69,6 +114,27 @@ const DEFAULT_CONFIG = {
     speed: 0.8,
     duration: 2000,
   },
+  INTRO_ANIMATION: {
+    enabled: false,
+    startCoords: [5.975338618538545, 50.89054201081809] as [number, number],
+    endCoords: [5.977246733617121, 50.888996872875126] as [number, number],
+    startZoom: 14,
+    startPitch: 0,
+    startBearing: 0,
+    endZoom: 17,
+    endPitch: 35,
+    endBearing: 162.4,
+    duration: 6000,
+    delay: 3000,
+  },
+  ZOOM_LIMITS: {
+    min: 10,
+    max: 20,
+  },
+  TELEPORT: {
+    enabled: false,
+    maxDistance: 1,
+  },
 };
 
 /**
@@ -78,6 +144,9 @@ function getMergedConfig(): {
   MAP: MapConfig;
   MARKER_ZOOM: MarkerZoomConfig;
   ANIMATION: AnimationConfig;
+  INTRO_ANIMATION: IntroAnimationConfig;
+  ZOOM_LIMITS: ZoomLimitsConfig;
+  TELEPORT: TeleportConfig;
 } {
   const customConfig = window.HEERLEN_MAP_CONFIG;
 
@@ -100,6 +169,27 @@ function getMergedConfig(): {
     ANIMATION: {
       speed: customConfig.animation?.speed ?? DEFAULT_CONFIG.ANIMATION.speed,
       duration: customConfig.animation?.duration ?? DEFAULT_CONFIG.ANIMATION.duration,
+    },
+    INTRO_ANIMATION: {
+      enabled: customConfig.introAnimation?.enabled ?? DEFAULT_CONFIG.INTRO_ANIMATION.enabled,
+      startCoords: customConfig.introAnimation?.startCoords || DEFAULT_CONFIG.INTRO_ANIMATION.startCoords,
+      endCoords: customConfig.introAnimation?.endCoords || DEFAULT_CONFIG.INTRO_ANIMATION.endCoords,
+      startZoom: customConfig.introAnimation?.startZoom ?? DEFAULT_CONFIG.INTRO_ANIMATION.startZoom,
+      startPitch: customConfig.introAnimation?.startPitch ?? DEFAULT_CONFIG.INTRO_ANIMATION.startPitch,
+      startBearing: customConfig.introAnimation?.startBearing ?? DEFAULT_CONFIG.INTRO_ANIMATION.startBearing,
+      endZoom: customConfig.introAnimation?.endZoom ?? DEFAULT_CONFIG.INTRO_ANIMATION.endZoom,
+      endPitch: customConfig.introAnimation?.endPitch ?? DEFAULT_CONFIG.INTRO_ANIMATION.endPitch,
+      endBearing: customConfig.introAnimation?.endBearing ?? DEFAULT_CONFIG.INTRO_ANIMATION.endBearing,
+      duration: customConfig.introAnimation?.duration ?? DEFAULT_CONFIG.INTRO_ANIMATION.duration,
+      delay: customConfig.introAnimation?.delay ?? DEFAULT_CONFIG.INTRO_ANIMATION.delay,
+    },
+    ZOOM_LIMITS: {
+      min: customConfig.zoomLimits?.min ?? DEFAULT_CONFIG.ZOOM_LIMITS.min,
+      max: customConfig.zoomLimits?.max ?? DEFAULT_CONFIG.ZOOM_LIMITS.max,
+    },
+    TELEPORT: {
+      enabled: customConfig.teleport?.enabled ?? DEFAULT_CONFIG.TELEPORT.enabled,
+      maxDistance: customConfig.teleport?.maxDistance ?? DEFAULT_CONFIG.TELEPORT.maxDistance,
     },
   };
 }
@@ -125,6 +215,8 @@ export const MAP_OPTIONS: MapboxOptions = {
   zoom: CONFIG.MAP.zoom,
   pitch: CONFIG.MAP.pitch,
   bearing: CONFIG.MAP.bearing,
+  minZoom: CONFIG.ZOOM_LIMITS.min,
+  maxZoom: CONFIG.ZOOM_LIMITS.max,
   antialias: true,
   interactive: true,
   renderWorldCopies: false,

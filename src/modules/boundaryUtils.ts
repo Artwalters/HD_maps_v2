@@ -36,11 +36,14 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
 /**
  * Setup boundary checking for map movement
  * @param map - The mapbox map instance
- * DISABLED: Automatic teleport when moving outside boundary
+ * Configurable via window.HEERLEN_MAP_CONFIG.teleport
  */
 export function setupBoundaryCheck(map: Map): void {
-  // DISABLED: No longer teleporting users back when they pan outside the boundary
-  /*
+  // Only setup boundary check if teleport is enabled
+  if (!CONFIG.TELEPORT.enabled) {
+    return;
+  }
+
   map.on('moveend', () => {
     // Skip this check if we're flying back
     if (map.isEasing()) return;
@@ -51,7 +54,7 @@ export function setupBoundaryCheck(map: Map): void {
       lat: CONFIG.MAP.boundary.center[1],
     };
 
-    // Calculate distance from current center to Heerlen center
+    // Calculate distance from current center to boundary center
     const distance = calculateDistance(
       currentCenter.lat,
       currentCenter.lng,
@@ -59,8 +62,8 @@ export function setupBoundaryCheck(map: Map): void {
       boundaryCenter.lng
     );
 
-    // If we're too far away (more than 1 km), fly back
-    if (distance > 1) {
+    // If we're too far away (more than configured max distance), fly back
+    if (distance > CONFIG.TELEPORT.maxDistance) {
       // Create blocker overlay
       const overlay = document.createElement('div');
       overlay.id = 'interaction-blocker';
@@ -69,9 +72,9 @@ export function setupBoundaryCheck(map: Map): void {
       // Fly back to center
       map.flyTo({
         center: CONFIG.MAP.center,
-        zoom: 17,
-        pitch: 45,
-        bearing: -17.6,
+        zoom: CONFIG.MAP.zoom,
+        pitch: CONFIG.MAP.pitch,
+        bearing: CONFIG.MAP.bearing,
         speed: CONFIG.ANIMATION.speed,
         curve: 1.5,
         essential: true,
@@ -87,5 +90,4 @@ export function setupBoundaryCheck(map: Map): void {
       });
     }
   });
-  */
 }

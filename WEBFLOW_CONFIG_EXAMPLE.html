@@ -30,6 +30,33 @@
     animation: {
       speed: 0.8,      // Animatie snelheid (0.2 = langzaam, 2 = snel)
       duration: 2000   // Animatie duur in milliseconden (2000 = 2 seconden)
+    },
+
+    // Intro animatie (vlieg van station naar bestemming)
+    introAnimation: {
+      enabled: false,  // Zet op true om intro animatie aan te zetten
+      startCoords: [5.975338618538545, 50.89054201081809],  // Start positie [longitude, latitude]
+      endCoords: [5.977246733617121, 50.888996872875126],    // Eind positie [longitude, latitude]
+      startZoom: 14,   // Start zoom level
+      startPitch: 0,   // Start camera hoek (0-85 graden)
+      startBearing: 0, // Start rotatie (-180 tot 180 graden)
+      endZoom: 17,     // Eind zoom level
+      endPitch: 35,    // Eind camera hoek (0-85 graden)
+      endBearing: 162.4, // Eind rotatie (-180 tot 180 graden)
+      duration: 6000,  // Animatie duur in milliseconden (6000 = 6 seconden)
+      delay: 3000      // Wachttijd voor start in milliseconden (3000 = 3 seconden)
+    },
+
+    // Zoom limieten
+    zoomLimits: {
+      min: 10,  // Minimale zoom (hoe ver kan je uit zoomen)
+      max: 20   // Maximale zoom (hoe ver kan je in zoomen)
+    },
+
+    // Teleport functie (terug naar centrum bij te ver navigeren)
+    teleport: {
+      enabled: false,  // Zet op true om teleport functie aan te zetten
+      maxDistance: 1   // Maximale afstand in kilometers voordat je terug wordt gestuurd
     }
   };
 </script>
@@ -93,6 +120,116 @@
       pitch: 30  // Alleen pitch aanpassen
     }
     // boundary en animation gebruiken default waardes
+  };
+</script>
+-->
+
+<!-- VOORBEELD 4: Met intro animatie ingeschakeld -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    startPosition: {
+      center: [5.979642, 50.887634],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6
+    },
+    introAnimation: {
+      enabled: true,  // Intro animatie aan
+      startCoords: [5.975338618538545, 50.89054201081809],
+      endCoords: [5.977246733617121, 50.888996872875126],
+      startZoom: 14,
+      startPitch: 0,
+      startBearing: 0,
+      endZoom: 17,
+      endPitch: 35,
+      endBearing: 162.4,
+      duration: 6000,
+      delay: 3000
+    }
+  };
+</script>
+-->
+
+<!-- VOORBEELD 5: Met teleport functie ingeschakeld -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    startPosition: {
+      center: [5.979642, 50.887634],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6
+    },
+    boundary: {
+      center: [5.977105864037915, 50.88774161029858],
+      radius: 0.6
+    },
+    teleport: {
+      enabled: true,     // Teleport functie aan
+      maxDistance: 0.8   // Terug naar centrum als je verder dan 800 meter navigeert
+    }
+  };
+</script>
+-->
+
+<!-- VOORBEELD 6: Beperk zoom limieten -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    startPosition: {
+      center: [5.979642, 50.887634],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6
+    },
+    zoomLimits: {
+      min: 13,  // Gebruiker kan niet verder uitzoomen dan zoom level 13
+      max: 19   // Gebruiker kan niet verder inzoomen dan zoom level 19
+    }
+  };
+</script>
+-->
+
+<!-- VOORBEELD 7: Volledige configuratie met alle opties -->
+<!--
+<script>
+  window.HEERLEN_MAP_CONFIG = {
+    startPosition: {
+      center: [5.979642, 50.887634],
+      zoom: 15.5,
+      pitch: 45,
+      bearing: -17.6
+    },
+    boundary: {
+      center: [5.977105864037915, 50.88774161029858],
+      radius: 0.6
+    },
+    animation: {
+      speed: 1.0,
+      duration: 2500
+    },
+    introAnimation: {
+      enabled: true,
+      startCoords: [5.975338618538545, 50.89054201081809],
+      endCoords: [5.977246733617121, 50.888996872875126],
+      startZoom: 14,
+      startPitch: 0,
+      startBearing: 0,
+      endZoom: 17,
+      endPitch: 35,
+      endBearing: 162.4,
+      duration: 6000,
+      delay: 3000
+    },
+    zoomLimits: {
+      min: 12,
+      max: 19
+    },
+    teleport: {
+      enabled: true,
+      maxDistance: 1
+    }
   };
 </script>
 -->
