@@ -75,31 +75,31 @@ export function setupMapLoadHandler(map: Map): void {
         setupLocationFilters();
       });
 
-    // Initial animation on load - DISABLED
-    // setTimeout(() => {
-    //   const finalZoom = window.matchMedia('(max-width: 479px)').matches ? 16.5 : 17;
-    //   const stationCoords: [number, number] = [5.975338618538545, 50.89054201081809];
-    //   const destinationCoords: [number, number] = [5.977246733617121, 50.888996872875126];
-    //
-    //   // Start position at station (bird's eye view)
-    //   map.jumpTo({
-    //     center: stationCoords,
-    //     zoom: 14,
-    //     pitch: 0,
-    //     bearing: 0,
-    //   });
-    //
-    //   // Fly to destination with camera rotation (180 degrees rotated)
-    //   map.flyTo({
-    //     center: destinationCoords,
-    //     zoom: finalZoom,
-    //     pitch: 35,
-    //     bearing: 162.4, // -17.6 + 180 = 162.4
-    //     duration: 6000,
-    //     essential: true,
-    //     easing: (t: number) => t * (2 - t), // Ease out quad
-    //   });
-    // }, 3000); // Start animatie na 3 seconden
+    // Initial animation on load
+    setTimeout(() => {
+      const finalZoom = window.matchMedia('(max-width: 479px)').matches ? 16.5 : 17;
+      const stationCoords: [number, number] = [5.975338618538545, 50.89054201081809];
+      const destinationCoords: [number, number] = [5.977246733617121, 50.888996872875126];
+
+      // Start position at station (bird's eye view)
+      map.jumpTo({
+        center: stationCoords,
+        zoom: 14,
+        pitch: 0,
+        bearing: 0,
+      });
+
+      // Fly to destination with camera rotation (180 degrees rotated)
+      map.flyTo({
+        center: destinationCoords,
+        zoom: finalZoom,
+        pitch: 35,
+        bearing: 162.4, // -17.6 + 180 = 162.4
+        duration: 6000,
+        essential: true,
+        easing: (t: number) => t * (2 - t), // Ease out quad
+      });
+    }, 3000); // Start animatie na 3 seconden
   });
 }
 

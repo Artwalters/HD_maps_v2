@@ -210,9 +210,7 @@ export class GeolocationManager {
       } else {
         // Debug info
       }
-    }
-    // DISABLED: Automatic return to center when outside boundary
-    /* else {
+    } else {
       // Debug info
       (this.geolocateControl as any)._watchState = 'OFF';
       if ((this.geolocateControl as any)._geolocateButton) {
@@ -242,7 +240,7 @@ export class GeolocationManager {
         bearing: 0,
         duration: 1500,
       });
-    } */
+    }
   }
 
   /**
@@ -770,8 +768,6 @@ export class GeolocationManager {
         self.hideBoundaryLayers();
       }, 200);
 
-      // DISABLED: Automatic teleport back to center after boundary popup
-      /*
       // Fly back to intro animation location
       const finalZoom = window.matchMedia('(max-width: 479px)').matches ? 17 : 18;
 
@@ -785,7 +781,6 @@ export class GeolocationManager {
         essential: true,
         easing: (t: number) => t * (2 - t),
       });
-      */
     }, 3000); // Close after 3 seconds
 
     // Assemble popup
@@ -812,8 +807,6 @@ export class GeolocationManager {
       // Debug info
     }
 
-    // DISABLED: Automatic fly to center when showing boundary popup
-    /*
     // Fly to center to show the boundary (only if not already flying)
     if (!this.map.isMoving() && !this.map.isEasing()) {
       // Debug info
@@ -827,7 +820,6 @@ export class GeolocationManager {
     } else {
       // Debug info
     }
-    */
 
     // Show popup with animation
     requestAnimationFrame(() => {

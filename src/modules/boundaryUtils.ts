@@ -36,11 +36,8 @@ export function calculateDistance(lat1: number, lon1: number, lat2: number, lon2
 /**
  * Setup boundary checking for map movement
  * @param map - The mapbox map instance
- * DISABLED: Automatic teleport when moving outside boundary
  */
 export function setupBoundaryCheck(map: Map): void {
-  // DISABLED: No longer teleporting users back when they pan outside the boundary
-  /*
   map.on('moveend', () => {
     // Skip this check if we're flying back
     if (map.isEasing()) return;
@@ -87,5 +84,4 @@ export function setupBoundaryCheck(map: Map): void {
       });
     }
   });
-  */
 }
