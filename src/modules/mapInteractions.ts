@@ -75,26 +75,29 @@ export function setupMapLoadHandler(map: Map): void {
         setupLocationFilters();
       });
 
-    // Initial animation on load
+    // Initial animation on load - Woonboulevard
     setTimeout(() => {
       const finalZoom = window.matchMedia('(max-width: 479px)').matches ? 16.5 : 17;
-      const stationCoords: [number, number] = [5.975338618538545, 50.89054201081809];
-      const destinationCoords: [number, number] = [5.977246733617121, 50.888996872875126];
+      // Woonboulevard coordinates
+      const startCoords: [number, number] = [5.948919516050887, 50.89496546932265];
+      const destinationCoords: [number, number] = [5.949252153400742, 50.89631881636659];
+      // OLD Heerlen Centrum start: [5.975338618538545, 50.89054201081809]
+      // OLD Heerlen Centrum eind: [5.977246733617121, 50.888996872875126]
 
-      // Start position at station (bird's eye view)
+      // Start position (bird's eye view from above)
       map.jumpTo({
-        center: stationCoords,
+        center: startCoords,
         zoom: 14,
         pitch: 0,
         bearing: 0,
       });
 
-      // Fly to destination with camera rotation (180 degrees rotated)
+      // Fly to destination (no rotation, just straight down)
       map.flyTo({
         center: destinationCoords,
         zoom: finalZoom,
         pitch: 35,
-        bearing: 162.4, // -17.6 + 180 = 162.4
+        bearing: -17.6, // No rotation (was 162.4 with 180 degree rotation)
         duration: 6000,
         essential: true,
         easing: (t: number) => t * (2 - t), // Ease out quad

@@ -48,7 +48,7 @@ export function setupBoundaryCheck(map: Map): void {
       lat: CONFIG.MAP.boundary.center[1],
     };
 
-    // Calculate distance from current center to Heerlen center
+    // Calculate distance from current center to Woonboulevard center
     const distance = calculateDistance(
       currentCenter.lat,
       currentCenter.lng,
